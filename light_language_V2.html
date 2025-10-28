@@ -7,10 +7,10 @@
 <style>
 :root{
   --bg:#0b0d10; --text:#e6edf3; --muted:#9aa4b2; --card:#0f141a; --border:#243141; --accent:#6aa6ff;
-  --wall-left:0%;  --wall-top:10%;    --wall-w:50%;  --wall-h:200%;
+  --wall-left:10%;  --wall-top:0%;    --wall-w:90%;  --wall-h:70%;
   --lamp-left:39%;  --lamp-top:29%;   --lamp-w:15%;  --lamp-h:10%;
   --spot-left:47%;  --spot-top:72%;   --spot-w:40%;  --spot-h:20%;
-  --cone-h:75%;     --cone-blur:2.2vw; --spot-blur:1.8vw; --wall-blur:3vw; --lamp-blur:.1vw;
+  --cone-h:75%;     --cone-blur:2.2vw; --spot-blur:1.8vw; --wall-blur:3vw; --lamp-blur:.4vw;
 }
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:"Noto Sans TC",ui-sans-serif,system-ui;}
@@ -20,7 +20,7 @@ h1{font-size:28px;margin:24px auto 6px;max-width:1100px;padding:0 16px;font-weig
 .row{display:flex;gap:16px;flex-wrap:wrap}
 .field{flex:1 1 300px}
 label{display:block;margin:8px 0 6px}
-select{width:100%;padding:12px;border:1px solid #2a394b;border-radius:8px;background:#121721;color:var(--text)}
+select{width:100%;padding:12px;border:1px solid #2a394b;border-radius:8px;background:#121721;color:var(--text);font-size:18px}
 .btnbar{display:flex;justify-content:space-between;gap:16px;margin-top:16px}
 .btn{padding:10px 16px;border:1px solid var(--border);border-radius:12px;background:#141c26;color:var(--text);cursor:pointer}
 .btn.primary{background:var(--accent);color:#0b1220;font-weight:700}
@@ -522,6 +522,3 @@ calibrate();
 </script>
 </body>
 </html>
-
-
-
