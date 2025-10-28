@@ -520,8 +520,8 @@ function calibrate(){
   const r=stage.getBoundingClientRect(); const ar=r.width/r.height;
   const t = clamp((ar-1.5)/(1.9-1.5), 0, 1);
 
-  setVar('--wall-left',10); setVar('--wall-top', lerp(15,5,t));
-  setVar('--wall-w', lerp(95,80,t)); setVar('--wall-h', lerp(55,45,t));
+  setVar('--wall-left',10); setVar('--wall-top', lerp(60,70,t));
+  setVar('--wall-w', lerp(95,80,t)); setVar('--wall-h', lerp(35,30,t));
 
   setVar('--lamp-left', lerp(24,34,t)); setVar('--lamp-top', lerp(25,35,t));
   setVar('--lamp-w', lerp(25,1,t)); setVar('--lamp-h', lerp(12,2,t));
