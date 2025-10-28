@@ -63,33 +63,34 @@ select{width:100%;padding:12px;border:1px solid #2a394b;border-radius:8px;backgr
 .scale-wrap .end-label{font-size:14px;color:var(--muted);white-space:nowrap;align-self:center}
 
 /* 窄螢幕保護 */
-/* Likert Scale Adjustments for Small Screens */
+/* Likert Scale Adjustments for Smaller Screens */
 @media(max-width: 480px) {
   .likert-row {
     margin: 18px 0;
+    font-size: 14px; /* Ensure text fits better */
   }
   
   .scale-wrap {
     display: grid;
     grid-template-columns: repeat(7, 1fr); /* Equal width for each column */
-    gap: 4px;
+    gap: 5px; /* Reduced gap to save space */
     width: 100%;
     justify-items: center;
   }
 
   .scale label {
-    font-size: 10px; /* Reduce label size for small screens */
+    font-size: 11px; /* Reduce font size for smaller screens */
     flex-direction: column;
     align-items: center;
   }
   
   .scale input[type="radio"] {
-    width: 18px;
-    height: 18px; /* Adjust size of radio buttons */
+    width: 16px;
+    height: 16px; /* Further adjust the radio button size */
   }
-  
+
   .end-label {
-    font-size: 10px; /* Reduce end label font size */
+    font-size: 12px; /* Reduce the end label size */
   }
 }
 </style>
