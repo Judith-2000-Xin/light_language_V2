@@ -39,7 +39,11 @@ select{width:100%;padding:12px;border:1px solid #2a394b;border-radius:8px;backgr
 .overlay{position:absolute;inset:0;pointer-events:none}
 
 /* 光層 */
-.wall{position:absolute;left:var(--wall-left);top:var(--wall-top);width:var(--wall-w);height:var(--wall-h);border-radius:50%;mix-blend-mode:screen;filter:blur(var(--wall-blur));opacity:0}
+/* 牆面漫射（改成大畫布 + 讓漸層自己是圓形） */
+.wall{
+  position:absolute;
+  /* 放大畫布，避免邊界造成亮度堆積；居中稍往上 */
+  left:-15%; top:-18%;  width:130%; height:85%;  mix-blend-mode:screen;  filter:blur(var(--wall-blur));  opacity:0;  border-radius:0;}
 .cone{position:absolute;left:0;bottom:-5%;width:100%;height:var(--cone-h);background: radial-gradient(72% 82% at 55% 88%, rgba(255, 255, 255, 0.35), rgba(0, 0, 0, 0) 100%);mix-blend-mode:screen;filter:blur(var(--cone-blur));opacity:0;transform-origin:50% 90%}
 .spot{position:absolute;left:var(--spot-left);top:var(--spot-top);width:var(--spot-w);height:var(--spot-h);transform:translate(-50%,-50%) rotate(-10deg);transform-origin:center;border-radius:50%;mix-blend-mode:screen;filter:blur(var(--spot-blur));opacity:0}
 .lamp{position:absolute;left:var(--lamp-left);top:var(--lamp-top);width:var(--lamp-w);height:var(--lamp-h);border-radius:50%;transform:rotate(-22deg);mix-blend-mode:screen;opacity:.6}
@@ -278,13 +282,29 @@ toStep2.addEventListener('click',()=>{ if(!okBasic()) return; step1.style.displa
 const Aalpha = v => Math.max(0, Math.min(1, v ?? 0));
 const BASE_TX = {spot:'translate(-50%,-50%) rotate(-10deg)', lamp:'rotate(-22deg)'};
 
-function renderWall(color, I) {
+function renderWall(color, I){
   const a = Aalpha(I);
-  const base = Math.min(0.30, 0.20 + 0.15 * a);
-  const wallAlpha = base * a;
 
-  // 增大漸層範圍，並確保光線可以覆蓋整個牆面
-  wall.style.background = `radial-gradient(ellipse at 50% 50%, ${rgba(color, 0.25 * wallAlpha)}, rgba(0, 0, 0, 0) 100%)`;
+  // 牆面中心（依你的場景，燈罩大約在畫面 36% x / 23% y）
+  const CX = 0.36, CY = 0.23;
+
+  // 主圓形漫射：超大半徑 + 多段 stop 做平滑 roll-off
+  const radial =
+    `radial-gradient(circle at ${CX*100}% ${CY*100}%,
+      ${rgba(color, 0.16*a)}  0%,
+      ${rgba(color, 0.10*a)} 22%,
+      ${rgba(color, 0.06*a)} 45%,
+      ${rgba(color, 0.03*a)} 70%,
+      rgba(0,0,0,0)         92%)`;
+
+  // 縱向淡淡的頂部漫射：避免只剩一顆亮塊
+  const vertical =
+    `linear-gradient(to bottom,
+      ${rgba(color, 0.10*a)} 0%,
+      ${rgba(color, 0.05*a)} 22%,
+      rgba(0,0,0,0)         55%)`;
+
+  wall.style.background = `${radial}, ${vertical}`;
   wall.style.opacity = 1;
 }
 function renderCone(color, I, shape){
