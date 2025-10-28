@@ -7,10 +7,10 @@
 <style>
 :root{
   --bg:#0b0d10; --text:#e6edf3; --muted:#9aa4b2; --card:#0f141a; --border:#243141; --accent:#6aa6ff;
-  --wall-left:10%;  --wall-top:10%;    --wall-w:200%;  --wall-h:200%;
+  --wall-left:5%;  --wall-top:5%;    --wall-w:90%;  --wall-h:90%;
   --lamp-left:39%;  --lamp-top:29%;   --lamp-w:15%;  --lamp-h:10%;
   --spot-left:47%;  --spot-top:72%;   --spot-w:40%;  --spot-h:20%;
-  --cone-h:75%;     --cone-blur:2.2vw; --spot-blur:1.8vw; --wall-blur:20vw; --lamp-blur:.4vw;
+  --cone-h:75%;     --cone-blur:2.2vw; --spot-blur:1.5vw; --wall-blur:3vw; --lamp-blur:.2vw;
 }
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:"Noto Sans TC",ui-sans-serif,system-ui;}
@@ -278,14 +278,11 @@ toStep2.addEventListener('click',()=>{ if(!okBasic()) return; step1.style.displa
 const Aalpha = v => Math.max(0, Math.min(1, v ?? 0));
 const BASE_TX = {spot:'translate(-50%,-50%) rotate(-10deg)', lamp:'rotate(-22deg)'};
 
-function renderWall(color, I) {
+function renderLamp(color, I){
   const a = Aalpha(I);
-  const base = Math.min(0.30, 0.20 + 0.15 * a);
-  const wallAlpha = base * a;
-
-  // 增大漸層範圍，並確保光線可以覆蓋整個牆面
-  wall.style.background = `radial-gradient(ellipse at 50% 50%, ${rgba(color, 0.25 * wallAlpha)}, rgba(0, 0, 0, 0) 100%)`;
-  wall.style.opacity = 1;
+  lamp.style.background = `radial-gradient(closest-side, ${rgba(color,0.5*a)}, rgba(0,0,0,0))`; 
+  lamp.style.transform  = BASE_TX.lamp;
+  lamp.style.opacity    = 0.6 * a;
 }
 function renderCone(color, I, shape){
   const a = Aalpha(I);
