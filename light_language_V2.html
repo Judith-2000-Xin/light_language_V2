@@ -9,7 +9,7 @@
   --bg:#0b0d10; --text:#e6edf3; --muted:#9aa4b2; --card:#0f141a; --border:#243141; --accent:#6aa6ff;
   --wall-left:5%;  --wall-top:5%;    --wall-w:90%;  --wall-h:90%;
   --lamp-left:39%;  --lamp-top:29%;   --lamp-w:15%;  --lamp-h:10%;
-  --spot-left:47%;  --spot-top:90%;   --spot-w:40%;  --spot-h:22%;
+  --spot-left:47%;  --spot-top:88%;   --spot-w:40%;  --spot-h:22%;
   --cone-h:70%;     --cone-blur:2.2vw; --spot-blur:1.5vw; --wall-blur:3vw; --lamp-blur:.2vw;
 }
 *{box-sizing:border-box}
@@ -506,7 +506,7 @@ function calibrate(){
   setVar('--lamp-left', lerp(24,34,t)); setVar('--lamp-top', lerp(25,35,t));
   setVar('--lamp-w', lerp(25,1,t)); setVar('--lamp-h', lerp(12,2,t));
 
-  setVar('--spot-left', lerp(50,46,t)); setVar('--spot-top', lerp(90,88,t));
+  setVar('--spot-left', lerp(50,46,t)); setVar('--spot-top', lerp(88,84,t));
   setVar('--spot-w', lerp(40,36,t)); setVar('--spot-h', lerp(22,20,t));
 
   setVar('--cone-h', lerp(70,65,t));
