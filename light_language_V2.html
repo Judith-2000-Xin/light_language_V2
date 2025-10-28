@@ -63,8 +63,34 @@ select{width:100%;padding:12px;border:1px solid #2a394b;border-radius:8px;backgr
 .scale-wrap .end-label{font-size:14px;color:var(--muted);white-space:nowrap;align-self:center}
 
 /* 窄螢幕保護 */
-@media(max-width:880px){
-  :root{ --spot-w:80%; --spot-h:45%; --cone-blur:3vw; --spot-blur:3vw; --wall-blur:4vw; }
+/* Likert Scale Adjustments for Small Screens */
+@media(max-width: 480px) {
+  .likert-row {
+    margin: 18px 0;
+  }
+  
+  .scale-wrap {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* Equal width for each column */
+    gap: 4px;
+    width: 100%;
+    justify-items: center;
+  }
+
+  .scale label {
+    font-size: 10px; /* Reduce label size for small screens */
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .scale input[type="radio"] {
+    width: 18px;
+    height: 18px; /* Adjust size of radio buttons */
+  }
+  
+  .end-label {
+    font-size: 10px; /* Reduce end label font size */
+  }
 }
 </style>
 </head>
@@ -116,7 +142,7 @@ select{width:100%;padding:12px;border:1px solid #2a394b;border-radius:8px;backgr
       </div>
 
       <div class="stage" id="stage">
-        <img class="base" src="lamp_simulate_screen_V2.png" alt="底圖" />
+        <img class="base" src="https://raw.githubusercontent.com/Judith-2000-Xin/light_language_V2/main/lamp_simulate_screen_V2.png" alt="底圖" />
         <div class="overlay">
           <div id="wall"   class="wall"></div>
           <div id="cone"   class="cone"></div>
@@ -493,6 +519,3 @@ calibrate();
 </script>
 </body>
 </html>
-
-
-
