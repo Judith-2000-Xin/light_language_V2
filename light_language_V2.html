@@ -10,7 +10,7 @@
   --wall-left:10%;  --wall-top:0%;    --wall-w:90%;  --wall-h:70%;
   --lamp-left:39%;  --lamp-top:29%;   --lamp-w:15%;  --lamp-h:10%;
   --spot-left:47%;  --spot-top:72%;   --spot-w:40%;  --spot-h:20%;
-  --cone-h:75%;     --cone-blur:2.2vw; --spot-blur:1.8vw; --wall-blur:3vw; --lamp-blur:.4vw;
+  --cone-h:75%;     --cone-blur:2.2vw; --spot-blur:1.8vw; --wall-blur:1.5vw; --lamp-blur:.4vw;
 }
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:"Noto Sans TC",ui-sans-serif,system-ui;}
@@ -40,7 +40,7 @@ select{width:100%;padding:12px;border:1px solid #2a394b;border-radius:8px;backgr
 
 /* 光層 */
 .wall{position:absolute;left:var(--wall-left);top:var(--wall-top);width:var(--wall-w);height:var(--wall-h);border-radius:50%;mix-blend-mode:screen;filter:blur(var(--wall-blur));opacity:0}
-.cone{position:absolute;left:0;bottom:-10%;width:100%;height:var(--cone-h);background:radial-gradient(72% 82% at 56% 90%,var(--spot-color) 0%,rgba(0,0,0,0) 92%);mix-blend-mode:screen;filter:blur(var(--cone-blur));opacity:0;transform-origin:50% 90%}
+.cone{position:absolute;left:0;bottom:-10%;width:100%;height:var(--cone-h);background: radial-gradient(60% 50% at 50% 50%, rgba(255, 255, 255, 0.35), rgba(0, 0, 0, 0) 100%);mix-blend-mode:screen;filter:blur(var(--cone-blur));opacity:0;transform-origin:50% 90%}
 .spot{position:absolute;left:var(--spot-left);top:var(--spot-top);width:var(--spot-w);height:var(--spot-h);transform:translate(-50%,-50%) rotate(-10deg);transform-origin:center;border-radius:50%;mix-blend-mode:screen;filter:blur(var(--spot-blur));opacity:0}
 .lamp{position:absolute;left:var(--lamp-left);top:var(--lamp-top);width:var(--lamp-w);height:var(--lamp-h);border-radius:50%;transform:rotate(-22deg);mix-blend-mode:screen;opacity:.6}
 .lamp::before{content:"";position:absolute;inset:-10% -15%;border-radius:50%;filter:blur(var(--lamp-blur));background:radial-gradient(closest-side,rgba(255,255,255,.9),rgba(255,255,255,0))}
