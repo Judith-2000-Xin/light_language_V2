@@ -278,11 +278,14 @@ toStep2.addEventListener('click',()=>{ if(!okBasic()) return; step1.style.displa
 const Aalpha = v => Math.max(0, Math.min(1, v ?? 0));
 const BASE_TX = {spot:'translate(-50%,-50%) rotate(-10deg)', lamp:'rotate(-22deg)'};
 
-function renderLamp(color, I){
+function renderWall(color, I) {
   const a = Aalpha(I);
-  lamp.style.background = `radial-gradient(closest-side, ${rgba(color,0.5*a)}, rgba(0,0,0,0))`; 
-  lamp.style.transform  = BASE_TX.lamp;
-  lamp.style.opacity    = 0.6 * a;
+  const base = Math.min(0.30, 0.20 + 0.15 * a);
+  const wallAlpha = base * a;
+
+  // 增大漸層範圍，並確保光線可以覆蓋整個牆面
+  wall.style.background = `radial-gradient(ellipse at 50% 50%, ${rgba(color, 0.25 * wallAlpha)}, rgba(0, 0, 0, 0) 100%)`;
+  wall.style.opacity = 1;
 }
 function renderCone(color, I, shape){
   const a = Aalpha(I);
