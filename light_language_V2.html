@@ -7,10 +7,10 @@
 <style>
 :root{
   --bg:#0b0d10; --text:#e6edf3; --muted:#9aa4b2; --card:#0f141a; --border:#243141; --accent:#6aa6ff;
-  --wall-left:10%;  --wall-top:45%;    --wall-w:80%;  --wall-h:80%;
+  --wall-left:10%;  --wall-top:90%;    --wall-w:80%;  --wall-h:10%;
   --lamp-left:39%;  --lamp-top:29%;   --lamp-w:15%;  --lamp-h:10%;
   --spot-left:47%;  --spot-top:86%;   --spot-w:40%;  --spot-h:22%;
-  --cone-h:70%;     --cone-blur:2.2vw; --spot-blur:1.5vw; --wall-blur:1vw; --lamp-blur:.2vw;
+  --cone-h:70%;     --cone-blur:2.2vw; --spot-blur:1.5vw; --wall-blur:1.2vw; --lamp-blur:.2vw;
 }
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:"Noto Sans TC",ui-sans-serif,system-ui;}
@@ -24,7 +24,7 @@ select{width:100%;padding:12px;border:1px solid #2a394b;border-radius:8px;backgr
 .btnbar{display:flex;justify-content:space-between;gap:16px;margin-top:16px}
 .btn{padding:10px 16px;border:1px solid var(--border);border-radius:12px;background:#141c26;color:var(--text);cursor:pointer}
 .btn.primary{background:var(--accent);color:#0b1220;font-weight:700}
-.btn:disabled{opacity:.2;cursor:not-allowed}
+.btn:disabled{opacity:.1;cursor:not-allowed}
 
 /* 提醒膠囊（不顯示情境名稱） */
 .badge{
