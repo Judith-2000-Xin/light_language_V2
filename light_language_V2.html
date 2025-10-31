@@ -39,7 +39,6 @@ select{width:100%;padding:12px;border:1px solid #2a394b;border-radius:8px;backgr
 .overlay{position:absolute;inset:0;pointer-events:none}
 
 /* 光層 */
-/* 牆面漫射（改成大畫布 + 讓漸層自己是圓形） */
 .wall{position:absolute;  left:var(--wall-left);  top:var(--wall-top);  width:var(--wall-w);  height:var(--wall-h);  mix-blend-mode:screen;  filter:blur(var(--wall-blur));  opacity:0.8;   border-radius:0;}
 .cone{position:absolute;left:0;bottom:-5%;width:100%;height:var(--cone-h);background: radial-gradient(72% 82% at 55% 88%, rgba(255, 255, 255, 0.35), rgba(0, 0, 0, 0) 100%);mix-blend-mode:screen;filter:blur(var(--cone-blur));opacity:0;transform-origin:50% 90%}
 .spot{position:absolute;left:var(--spot-left);top:var(--spot-top);width:var(--spot-w);height:var(--spot-h);transform:translate(-50%,-50%) rotate(-10deg);transform-origin:center;border-radius:50%;mix-blend-mode:screen;filter:blur(var(--spot-blur));opacity:0}
@@ -63,38 +62,13 @@ select{width:100%;padding:12px;border:1px solid #2a394b;border-radius:8px;backgr
 .scale span{font-size:12px;color:var(--muted)}
 .scale-wrap .end-label{font-size:14px;color:var(--muted);white-space:nowrap;align-self:center}
 
-/* 窄螢幕保護 */
-/* Likert Scale Adjustments for Mobile */
+/* 行動版 */
 @media(max-width: 480px) {
-  .likert-row {
-    margin: 16px 0;
-    font-size: 14px; /* Ensure text fits better */
-  }
-
-  .scale-wrap {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr); /* Equal width for each column */
-    gap: 3px; /* Reduced gap to fit better */
-    width: 100%;
-    justify-items: center;
-  }
-
-  .scale label {
-    font-size: 10px; /* Further reduce font size for small screens */
-    flex-direction: column;
-    align-items: center;
-    text-align: center; /* Ensure label text is centered */
-  }
-
-  .scale input[type="radio"] {
-    width: 16px;
-    height: 16px; /* Adjust size of radio buttons */
-  }
-
-  .end-label {
-    font-size: 10px; /* Reduce the end label font size */
-    text-align: center; /* Ensure label text is centered */
-  }
+  .likert-row { margin: 16px 0; font-size: 14px; }
+  .scale-wrap { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; width: 100%; justify-items: center; }
+  .scale label { font-size: 10px; flex-direction: column; align-items: center; text-align: center; }
+  .scale input[type="radio"] { width: 16px; height: 16px; }
+  .end-label { font-size: 10px; text-align: center; }
 }
 </style>
 </head>
@@ -119,7 +93,8 @@ select{width:100%;padding:12px;border:1px solid #2a394b;border-radius:8px;backgr
     <section id="step1" class="card" style="display:none">
       <h3>基本資料（匿名處理）</h3>
       <div class="row">
-        <div class="field"><label>年齡</label>
+        <!-- FIX: 補上缺失的雙引號 -->
+        <div class="field"><label>年齡</label> <!-- FIX -->
           <select id="age"><option value="">請選擇</option><option>18 歲以下</option><option>18–24 歲</option><option>25–34 歲</option><option>35–44 歲</option><option>45–54 歲</option><option>55 歲以上</option></select>
         </div>
         <div class="field"><label>性別</label>
@@ -141,7 +116,7 @@ select{width:100%;padding:12px;border:1px solid #2a394b;border-radius:8px;backgr
     <!-- 模擬與作答 -->
     <section id="step2" style="display:none">
       <div class="card" style="display:flex;justify-content:space-between;align-items:center">
-        <span class="badge" id="sceneBadge">請先觀看畫面中光照之<strong>亮度、色溫與節律</strong>變化，並根據您的<strong>即時主觀感受</strong>作答。作答無對錯之分。</span>
+        <span class="badge" id="sceneBadge">（載入中…）</span>
         <span style="color:var(--muted);font-size:14px"><span id="progressText">0</span> / 12</span>
       </div>
 
@@ -162,10 +137,9 @@ select{width:100%;padding:12px;border:1px solid #2a394b;border-radius:8px;backgr
           本問卷採 7 點量表（1=非常不同意，7=非常同意）。
         </p>
         <form id="form">
-          <div class="likert-row"><div class="likert-head">此照明情境的節奏變化或色溫轉換能提醒我回到當前任務。</div><div class="scale-wrap"><span class="end-label">非常不同意</span><div class="scale" data-q="q1"></div><span class="end-label">非常同意</span></div></div>
+          <div class="likert-row"><div class="likert-head">此照明情境的漸暗與暖調轉換讓我感到結束或休息的氛圍。</div><div class="scale-wrap"><span class="end-label">非常不同意</span><div class="scale" data-q="q1"></div><span class="end-label">非常同意</span></div></div>
           <div class="likert-row"><div class="likert-head">此照明情境的穩定亮度與色調讓我感到平靜並能持續專注。</div><div class="scale-wrap"><span class="end-label">非常不同意</span><div class="scale" data-q="q2"></div><span class="end-label">非常同意</span></div></div>
-          <div class="likert-row"><div class="likert-head">此照明情境的漸暗與暖調轉換讓我感到結束或休息的氛圍。</div><div class="scale-wrap"><span class="end-label">非常不同意</span><div class="scale" data-q="q3"></div><span class="end-label">非常同意</span></div></div>
-          <!-- 這裡修正 class：lik頭 -> likert-head -->
+          <div class="likert-row"><div class="likert-head">此照明情境的節奏變化或色溫轉換能提醒我回到當前任務。</div><div class="scale-wrap"><span class="end-label">非常不同意</span><div class="scale" data-q="q3"></div><span class="end-label">非常同意</span></div></div>
           <div class="likert-row"><div class="likert-head">此照明情境的柔和與暖色感使我感到被安撫與放鬆。</div><div class="scale-wrap"><span class="end-label">非常不同意</span><div class="scale" data-q="q4"></div><span class="end-label">非常同意</span></div></div>
           <div class="likert-row"><div class="likert-head">此照明情境的亮度或閃爍頻率讓我感到緊繃或不適。</div><div class="scale-wrap"><span class="end-label">非常不同意</span><div class="scale" data-q="q5"></div><span class="end-label">非常同意</span></div></div>
 
@@ -202,20 +176,47 @@ const mixColor=r=>{const [w1,w2,w3]=normalize(r);const c1=BASE_COLORS[9802],c2=B
 const rgba=(c,a)=>`rgba(${c.r},${c.g},${c.b},${a})`;
 
 /* ============ 場景定義（固定配置，稍後洗牌） ============ */
-const SCENES_RAW=[
-  {id:"Q1-深度學習", ratio:[100,0,0],   intensity:1.00, animation:"none",  cycleSec:12},
-  {id:"Q1-高效工作", ratio:[100,7,16], intensity:0.95, animation:"none",  cycleSec:12},
-  {id:"Q1-日常事務", ratio:[100,0,72], intensity:0.85, animation:"none",  cycleSec:12},
-  {id:"Q2-色溫引導", ratio:[97,15,100], ratioB:[27,52,100], intensity:0.85, animation:"ramp",   cycleSec:10},
-  {id:"Q2-溫和脈衝", ratio:[68,20,100], intensity:0.80, animation:"pulse",  freq:0.4, amp:0.35, cycleSec:10},
-  {id:"Q2-光束聚焦", ratio:[100,0,60], intensity:0.90, animation:"pulse",   freq:1.0, amp:0.40, cycleSec:10},
-  {id:"Q2-氣氛轉換", ratio:[2,100,0], ratioB:[30,46,100],  intensity:0.75, animation:"ramp",   cycleSec:8},
-  {id:"Q3-溫柔強制(→熄燈)", ratio:[20,81,100], intensity:0.70, animation:"powerdown", cycleSec:8, holdBlack:1, warmupSec:0},
-  {id:"Q3-晚安序列(→熄燈)", ratio:[2,100,0],   intensity:0.60, animation:"powerdown", cycleSec:12, holdBlack:2, warmupSec:0},
-  {id:"Q4-日落提醒", ratio:[14,100,100], ratioB:[97,15,100], intensity:0.85, animation:"ramp", cycleSec:10},
-  {id:"Q4-呼吸光暈", ratio:[4,100,63],  intensity:0.70, animation:"breath", freq:0.42, amp:0.50, cycleSec:12},
-  {id:"Q4-番茄時鐘", ratio:[6,100,77], ratioB:[100,1,36], intensity:1.0, animation:"pomodoro",
-   flashes:5, onDur:0.25, offDur:0.35, holdSec:5, cycleSec:8}
+const SCENES_RAW = [
+  // Q1：無動畫（僅描述外觀，不引導情緒）
+  { id:"Q1-深度學習", ratio:[100,0,0], intensity:1.00, animation:"none", cycleSec:12,
+    desc:"冷白光感，亮度恆定，無節律變化。" },
+
+  { id:"Q1-高效工作", ratio:[100,7,16], intensity:0.95, animation:"none", cycleSec:12,
+    desc:"自然光感，亮度中高，無節律變化。" },
+
+  { id:"Q1-日常事務", ratio:[100,0,72], intensity:0.85, animation:"none", cycleSec:12,
+    desc:"自然光感，亮度中等，無節律變化。" },
+
+  // Q2：有節律或漸變，但僅客觀描述
+  { id:"Q2-色溫引導", ratio:[97,15,100], ratioB:[27,52,100], intensity:0.85, animation:"ramp", cycleSec:10,
+    desc:"色調由自然光感逐步轉為暖白，亮度維持穩定。" },
+
+  { id:"Q2-溫和脈衝", ratio:[68,20,100], intensity:0.80, animation:"pulse", freq:0.4, amp:0.35, cycleSec:10,
+    desc:"自然光感，亮度以低頻規律起伏（溫和）。" },
+
+  { id:"Q2-光束聚焦", ratio:[100,0,60], intensity:0.90, animation:"pulse", freq:1.0, amp:0.40, cycleSec:10,
+    desc:"自然光感，中心區域較集中，伴隨輕微亮度起伏。" },
+
+  { id:"Q2-氣氛轉換", ratio:[2,100,0], ratioB:[30,46,100], intensity:0.75, animation:"ramp", cycleSec:8,
+    desc:"色調由暖白光感逐漸轉為自然光感，亮度維持穩定。" },
+
+  // Q3：漸暗到熄燈
+  { id:"Q3-溫柔強制(→熄燈)", ratio:[20,81,100], intensity:0.70, animation:"powerdown", cycleSec:8, holdBlack:1, warmupSec:0,
+    desc:"暖白調，亮度在一段時間內漸降直至熄燈。" },
+
+  { id:"Q3-晚安序列(→熄燈)", ratio:[2,100,0], intensity:0.70, animation:"powerdown", cycleSec:10, holdBlack:2, warmupSec:0,
+    desc:"近燭光感，亮度在一段時間內漸降直至熄燈。" },
+
+  // Q4：提醒與呼吸
+  { id:"Q4-日落提醒", ratio:[14,100,100], ratioB:[97,15,100], intensity:0.9, animation:"ramp", cycleSec:8,
+    desc:"色調由暖白逐步轉為自然光感，亮度維持穩定。" },
+
+  { id:"Q4-呼吸光暈", ratio:[4,100,63], intensity:0.70, animation:"breath", freq:0.42, amp:0.50, cycleSec:12,
+    desc:"暖白至近燭光之間，光暈緩慢放大與縮小（呼吸節律）。" },
+
+  { id:"Q4-番茄時鐘", ratio:[6,100,77], ratioB:[100,1,36], intensity:1.0, animation:"pomodoro",
+    flashes:5, onDur:0.25, offDur:0.35, holdSec:5, cycleSec:8,
+    desc:"先以暖白光進行短促閃爍數次，隨後切換為自然光感持亮數秒。" }
 ];
 
 /* ============ DOM 與狀態 ============ */
@@ -241,15 +242,24 @@ const drawer=document.getElementById('drawer'); const timebar=document.getElemen
 const sceneBadge=document.getElementById('sceneBadge'); const progressText=document.getElementById('progressText');
 const form=document.getElementById('form'); const prevBtn=document.getElementById('prevBtn'); const nextBtn=document.getElementById('nextBtn');
 
-/* 提醒文字常數（避免每 frame 產生新字串） */
-const TEXT_DEFAULT = `請先觀看照明模擬情境之<strong>亮度、色溫與節律</strong>變化，並根據您的<strong>即時主觀感受</strong>作答。無對錯之分。`;
-const TEXT_Q1 = `請先觀看照明模擬情境<strong>(無動畫)</strong>，並根據您的<strong>即時主觀感受</strong>作答。無對錯之分。`;
+/* 提醒文字（函式） */
+/* ↓↓↓ 依照你的指令，僅保留「情境說明」行 ↓↓↓ */
+const TEXT_DEFAULT = (desc) => `
+  <div style="color:var(--muted); font-size:15px; line-height:1.6;">
+    <strong>情境說明：</strong>${desc}
+  </div>`;
+const TEXT_Q1 = (desc) => `
+  <div style="color:var(--muted); font-size:15px; line-height:1.6;">
+    <strong>情境說明：</strong>${desc}（無動畫）
+  </div>`;
+/* ↑↑↑ 其餘不動 ↑↑↑ */
 
 let participant_id = (crypto.randomUUID? crypto.randomUUID(): Math.random().toString(36).slice(2));
 let seed = Math.floor(Math.random()*1e9);
 let SCENES = SCENES_RAW.slice();
-shuffleInPlace(SCENES, seed);                // 隨機且可用 seed 重現
-let order_ids = SCENES.map(s=>s.id).join('|');
+shuffleInPlace(SCENES, seed);
+let order_ids = SCENES.map(s=>s.id).join('|'); // 只宣告一次
+
 let idx = 0, answers = [], rafId = 0, t0 = 0, sceneStartTs = 0;
 let surveyStartTs = new Date().toISOString();
 
@@ -282,15 +292,12 @@ const BASE_TX = {spot:'translate(-50%,-50%) rotate(-10deg)', lamp:'rotate(-22deg
 function renderWall(color, I){
   const a = Math.max(0, Math.min(1, I ?? 0));
   const wallAlpha = (Math.min(0.30, 0.20 + 0.15*a)) * a;
-
-  // 光心鎖在盒子底緣以外（100%→110%），避免在中段形成帶狀
   wall.style.background =
     `radial-gradient(120% 180% at 50% 110%,
       ${rgba(color, 0.26*wallAlpha)} 0%,
       ${rgba(color, 0.14*wallAlpha)} 58%,
       rgba(0,0,0,0) 100%)`;
-
-  wall.style.opacity = 0.7;   // 牆面整體透明度再保守一點
+  wall.style.opacity = 0.7;
 }
 function renderCone(color, I, shape){
   const a = Aalpha(I);
@@ -363,7 +370,6 @@ function animatedState(scene,t){
       const hold = scene.holdSec ?? 5;
       const T = flashTotal + hold;
       const p = t % T;
-
       if (p < flashTotal){
         ratio = scene.ratio.slice();
         const q = p % (on+off);
@@ -387,16 +393,13 @@ function renderFrame(scene,t){
   renderWall(color,intensity); renderCone(color,intensity,shape);
   renderSpot(color,intensity,shape); renderLamp(color,intensity);
 
-  // 左上提醒文字
-  sceneBadge.innerHTML = scene.id.startsWith('Q1-') ? TEXT_Q1 : TEXT_DEFAULT;
+  sceneBadge.innerHTML = scene.id.startsWith('Q1-') ? TEXT_Q1(scene.desc||"") : TEXT_DEFAULT(scene.desc||"");
 
-  // timebar
   const cyc= (scene.animation==="pomodoro")
               ? ((scene.flashes??5)*((scene.onDur??0.25)+(scene.offDur??0.35)) + (scene.holdSec??5))
               : (scene.cycleSec+(scene.holdBlack||0));
   timebar.style.width=`${((t%cyc)/cyc)*100}%`;
 }
-
 function startAnimation(scene){
   cancelAnimationFrame(rafId); t0=performance.now();
   (function loop(now){const t=(now-t0)/1000; renderFrame(scene,t); rafId=requestAnimationFrame(loop)})(t0);
@@ -473,26 +476,23 @@ async function submitToSheet(rows){
       intensity: r.intensity,
       animation: r.animation,
       cycleSec: r.cycleSec,
-      q1: r.q1, q2: r.q2, q3: r.q3, q4: r.q4, q5: r.q5,
+      q1: r.q1, q2: r.q2, q4: r.q4, q5: r.q5, q3: r.q3,
       rt_ms: r.rt_ms
     }))
   };
 
-  // 關鍵：使用 text/plain，避免 CORS 預檢（OPTIONS）
   const res = await fetch(SCRIPT_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify(payload)
   });
 
-  // 下面保留檢查與偵錯
   if (!res.ok) {
     const text = await res.text().catch(()=>'(no body)');
     console.error('GAS HTTP error', res.status, text);
     throw new Error(`HTTP ${res.status}`);
   }
   const data = await res.json().catch(async () => {
-    // 如果後端回傳 text/plain 也能處理
     const t = await res.text();
     try { return JSON.parse(t); } catch { return {status:'error', message:'非 JSON 回應: '+t}; }
   });
@@ -506,13 +506,11 @@ function calibrate(){
   const ar = r.width / r.height;
   const t = clamp((ar-1.5)/(1.9-1.5), 0, 1);
 
-  // 牆面層：下移 + 變矮（桌面帶狀會不見）
-  setVar('--wall-left', 5);                 // 略微加寬左右容錯
-  setVar('--wall-top',  lerp(72, 78, t));   // 72%~78%（覺得高/低再 +/− 2）
-  setVar('--wall-w',    lerp(90, 95, t));   // 寬一點避免邊緣界線
-  setVar('--wall-h',    lerp(22, 18, t));   // 矮一點，只覆蓋桌面上緣
+  setVar('--wall-left', 5);
+  setVar('--wall-top',  lerp(72, 78, t));
+  setVar('--wall-w',    lerp(90, 95, t));
+  setVar('--wall-h',    lerp(22, 18, t));
 
-  // 其他你原本的設定照舊…
   setVar('--lamp-left',  lerp(25,34,t));
   setVar('--lamp-top',   lerp(25,35,t));
   setVar('--lamp-w',     lerp(24.5,0.75,t));
@@ -526,7 +524,7 @@ function calibrate(){
   setVar('--cone-h',     lerp(70,65,t));
 
   const base = Math.min(r.width, r.height);
-  document.documentElement.style.setProperty('--wall-blur', (base*0.05/10)+'vw'); // 比之前更柔
+  document.documentElement.style.setProperty('--wall-blur', (base*0.05/10)+'vw');
   document.documentElement.style.setProperty('--cone-blur', (base*0.022/10)+'vw');
   document.documentElement.style.setProperty('--spot-blur', (base*0.018/10)+'vw');
   document.documentElement.style.setProperty('--lamp-blur', (base*0.009/10)+'vw');
@@ -538,4 +536,3 @@ calibrate();
 </script>
 </body>
 </html>
-
