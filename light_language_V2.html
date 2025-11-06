@@ -178,41 +178,41 @@ const rgba=(c,a)=>`rgba(${c.r},${c.g},${c.b},${a})`;
 /* ============ 場景定義（固定配置，稍後洗牌） ============ */
 const SCENES_RAW = [
   // Q1：無動畫（僅描述外觀，不引導情緒）
-  { id:"Q1-深度學習", ratio:[100,0,0], intensity:1.00, animation:"none", cycleSec:12,
+  { id:"Q1-深度學習", ratio:[100,0,0], intensity:1.00, animation:"none", cycleSec:10,
     desc:"冷白光感，亮度恆定，無節律變化。" },
 
-  { id:"Q1-高效工作", ratio:[100,7,16], intensity:0.95, animation:"none", cycleSec:12,
+  { id:"Q1-高效工作", ratio:[100,7,16], intensity:0.95, animation:"none", cycleSec:10,
     desc:"自然光感，亮度中高，無節律變化。" },
 
-  { id:"Q1-日常事務", ratio:[100,0,72], intensity:0.85, animation:"none", cycleSec:12,
+  { id:"Q1-日常事務", ratio:[100,0,72], intensity:0.85, animation:"none", cycleSec:10,
     desc:"自然光感，亮度中等，無節律變化。" },
 
   // Q2：有節律或漸變，但僅客觀描述
   { id:"Q2-色溫引導", ratio:[97,15,100], ratioB:[27,52,100], intensity:0.85, animation:"ramp", cycleSec:10,
-    desc:"色調由自然光感逐步轉為暖白，亮度維持穩定。" },
+    desc:"由暖白光感逐漸轉為自然光感，亮度維持穩定。" },
 
-  { id:"Q2-溫和脈衝", ratio:[68,20,100], intensity:0.80, animation:"pulse", freq:0.4, amp:0.35, cycleSec:10,
+  { id:"Q2-溫和脈衝", ratio:[68,20,100], intensity:0.85, animation:"pulse", freq:0.4, amp:0.35, cycleSec:10,
     desc:"自然光感，亮度以低頻規律起伏（溫和）。" },
 
   { id:"Q2-光束聚焦", ratio:[100,0,60], intensity:0.90, animation:"pulse", freq:1.0, amp:0.40, cycleSec:10,
     desc:"自然光感，中心區域較集中，伴隨輕微亮度起伏。" },
 
-  { id:"Q2-氣氛轉換", ratio:[2,100,0], ratioB:[30,46,100], intensity:0.75, animation:"ramp", cycleSec:8,
-    desc:"色調由暖白光感逐漸轉為自然光感，亮度維持穩定。" },
+  { id:"Q2-氣氛轉換", ratio:[2,100,0], ratioB:[30,46,100], intensity:0.85, animation:"ramp", cycleSec:8,
+    desc:"色調由暖白光感轉為燭光感，亮度維持穩定。" },
 
   // Q3：漸暗到熄燈
   { id:"Q3-溫柔強制(→熄燈)", ratio:[20,81,100], intensity:0.70, animation:"powerdown", cycleSec:8, holdBlack:1, warmupSec:0,
     desc:"暖白調，亮度在一段時間內漸降直至熄燈。" },
 
-  { id:"Q3-晚安序列(→熄燈)", ratio:[2,100,0], intensity:0.70, animation:"powerdown", cycleSec:10, holdBlack:2, warmupSec:0,
+  { id:"Q3-晚安序列(→熄燈)", ratio:[2,100,0], intensity:0.85, animation:"powerdown", cycleSec:10, holdBlack:1.5, warmupSec:0,
     desc:"近燭光感，亮度在一段時間內漸降直至熄燈。" },
 
   // Q4：提醒與呼吸
-  { id:"Q4-日落提醒", ratio:[14,100,100], ratioB:[97,15,100], intensity:0.9, animation:"ramp", cycleSec:8,
-    desc:"色調由暖白逐步轉為自然光感，亮度維持穩定。" },
+  { id:"Q4-日落提醒", ratio:[2,100,0], ratioB:[97,15,100], intensity:0.9, animation:"ramp", cycleSec:8,
+    desc:"色調由暖白光漸漸轉為燭光，亮度維持穩定。" },
 
   { id:"Q4-呼吸光暈", ratio:[4,100,63], intensity:0.70, animation:"breath", freq:0.42, amp:0.50, cycleSec:12,
-    desc:"暖白至近燭光之間，光暈緩慢放大與縮小（呼吸節律）。" },
+    desc:"近燭光感，光暈緩慢放大與縮小（呼吸節律）。" },
 
   { id:"Q4-番茄時鐘", ratio:[6,100,77], ratioB:[100,1,36], intensity:1.0, animation:"pomodoro",
     flashes:5, onDur:0.25, offDur:0.35, holdSec:5, cycleSec:8,
@@ -536,3 +536,4 @@ calibrate();
 </script>
 </body>
 </html>
+
