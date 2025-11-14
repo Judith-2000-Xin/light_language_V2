@@ -262,6 +262,7 @@ let order_ids = SCENES.map(s=>s.id).join('|'); // 只宣告一次
 
 let idx = 0, answers = [], rafId = 0, t0 = 0, sceneStartTs = 0;
 let surveyStartTs = new Date().toISOString();
+let isSubmitting = false;   // ★ 避免重複送出
 
 /* ============ 同意/基本資料 gating ============ */
 function updateConsent(){ toStep1.disabled = !consent.checked; }
@@ -444,15 +445,52 @@ function collectCurrent(){
   return rec;
 }
 prevBtn.addEventListener('click',()=>{ if(idx>0){ idx--; loadScene(idx); } });
-nextBtn.addEventListener('click',async()=>{
-  const rec=collectCurrent(); if(!rec){ alert('請完成本頁五題評分（1~7）。'); return; }
-  answers[idx]=rec;
-  if(idx===SCENES.length-1){
-    let ok=false;
-    try{ await submitToSheet(answers); ok=true; }
-    catch(e){ console.warn('送出到試算表失敗：',e); if(FORCE_COMPLETE_ON_ERROR) ok=true; }
-    if(ok){ step2.style.display='none'; thanks.style.display='block'; cancelAnimationFrame(rafId); }
-  }else{ idx++; loadScene(idx); }
+nextBtn.addEventListener('click', async () => {
+  // 已經在送出了，就忽略後續點擊
+  if (isSubmitting) return;
+
+  const rec = collectCurrent();
+  if (!rec) {
+    alert('請完成本頁五題評分（1~7）。');
+    return;
+  }
+  answers[idx] = rec;
+
+  // 還沒到最後一頁：正常換場景
+  if (idx < SCENES.length - 1) {
+    idx++;
+    loadScene(idx);
+    return;
+  }
+
+  // 最後一頁：開始送出，鎖定按鈕避免重複送出
+  isSubmitting = true;
+  prevBtn.disabled = true;
+  nextBtn.disabled = true;
+  const oldText = nextBtn.textContent;
+  nextBtn.textContent = '送出中…';
+
+  let ok = false;
+  try {
+    await submitToSheet(answers);
+    ok = true;
+  } catch (e) {
+    console.warn('送出到試算表失敗：', e);
+    if (FORCE_COMPLETE_ON_ERROR) ok = true;
+  }
+
+  if (ok) {
+    step2.style.display = 'none';
+    thanks.style.display = 'block';
+    cancelAnimationFrame(rafId);
+  } else {
+    // 若真的送出失敗，又不強制完成，恢復按鈕讓受試者可重試
+    isSubmitting = false;
+    prevBtn.disabled = false;
+    nextBtn.disabled = false;
+    nextBtn.textContent = oldText;
+    alert('送出失敗，請稍後再試一次。');
+  }
 });
 
 /* ============ 送出到 Google Apps Script ============ */
@@ -536,7 +574,3 @@ calibrate();
 </script>
 </body>
 </html>
-
-
-
-
