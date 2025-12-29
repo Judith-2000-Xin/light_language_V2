@@ -89,12 +89,30 @@ select{width:100%;padding:12px;border:1px solid #2a394b;border-radius:8px;backgr
       </div>
     </section>
 
+    <!-- ★ 新增：螢幕亮度提示頁（在 step0 下一頁） -->
+    <section id="stepBright" class="card" style="display:none">
+      <h3>作答裝置螢幕亮度設定</h3>
+      <p style="color:var(--muted);line-height:1.9">
+        為確保不同裝置的呈現一致性，請先將您目前作答裝置的「螢幕亮度調整至最亮」。<br/>
+        調整完成後，勾選下方選項即可繼續。
+      </p>
+
+      <label style="display:flex;gap:10px;margin-top:14px;align-items:center">
+        <input id="brightOk" type="checkbox" style="width:20px;height:20px">
+        <span>我已將作答裝置之螢幕亮度調整至最亮。</span>
+      </label>
+
+      <div class="btnbar">
+        <button id="backBright" class="btn">上一步</button>
+        <button id="toStep1FromBright" class="btn primary" disabled>下一頁</button>
+      </div>
+    </section>
+
     <!-- 基本資料 -->
     <section id="step1" class="card" style="display:none">
       <h3>基本資料（匿名處理）</h3>
       <div class="row">
-        <!-- FIX: 補上缺失的雙引號 -->
-        <div class="field"><label>年齡</label> <!-- FIX -->
+        <div class="field"><label>年齡</label>
           <select id="age"><option value="">請選擇</option><option>11(含)歲以下</option><option>12–17歲</option><option>18–29歲</option><option>30–44歲</option><option>45–64歲</option><option>65(含)歲以上</option></select>
         </div>
         <div class="field"><label>性別</label>
@@ -221,11 +239,19 @@ const SCENES_RAW = [
 
 /* ============ DOM 與狀態 ============ */
 const step0=document.getElementById('step0');
+const stepBright=document.getElementById('stepBright'); // ★ 新增
 const step1=document.getElementById('step1');
 const step2=document.getElementById('step2');
 const thanks=document.getElementById('thanks');
+
 const consent=document.getElementById('consent');
 const toStep1=document.getElementById('toStep1');
+
+// ★ 新增：亮度頁元件
+const brightOk=document.getElementById('brightOk');
+const backBright=document.getElementById('backBright');
+const toStep1FromBright=document.getElementById('toStep1FromBright');
+
 const toStep2=document.getElementById('toStep2');
 const back0=document.getElementById('back0');
 
@@ -268,13 +294,41 @@ let isSubmitting = false;   // ★ 避免重複送出
 function updateConsent(){ toStep1.disabled = !consent.checked; }
 ['change','click','input','keyup'].forEach(ev=>consent.addEventListener(ev,updateConsent));
 updateConsent();
-toStep1.addEventListener('click',()=>{ if(!consent.checked) return; step0.style.display='none'; step1.style.display='block'; });
+
+/* ★ 改：同意頁下一頁 → 亮度提示頁 */
+toStep1.addEventListener('click',()=>{ 
+  if(!consent.checked) return; 
+  step0.style.display='none'; 
+  stepBright.style.display='block'; 
+});
+
+/* ★ 新增：亮度提示頁 gating */
+function updateBright(){ toStep1FromBright.disabled = !brightOk.checked; }
+['change','click','input','keyup'].forEach(ev=>brightOk.addEventListener(ev,updateBright));
+updateBright();
+
+backBright.addEventListener('click',()=>{
+  stepBright.style.display='none';
+  step0.style.display='block';
+});
+
+toStep1FromBright.addEventListener('click',()=>{
+  if(!brightOk.checked) return;
+  stepBright.style.display='none';
+  step1.style.display='block';
+});
 
 function okBasic(){ return age.value && gender.value && lampFreq.value && device.value; }
 function updateS1(){ toStep2.disabled = !okBasic(); }
 [age,gender,lampFreq,device].forEach(el=>el.addEventListener('change',updateS1));
 updateS1();
-back0.addEventListener('click',()=>{ step1.style.display='none'; step0.style.display='block'; });
+
+/* 改：step1 的上一步回到亮度頁（而不是同意頁） */
+back0.addEventListener('click',()=>{ 
+  step1.style.display='none'; 
+  stepBright.style.display='block'; 
+});
+
 toStep2.addEventListener('click',()=>{ if(!okBasic()) return; step1.style.display='none'; step2.style.display='block'; calibrate(); });
 
 /* ============ Likert 建立 ============ */
